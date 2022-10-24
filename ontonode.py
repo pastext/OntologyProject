@@ -11,13 +11,12 @@ ontology = {
 }
 
 class Node:
-    def __init__(self, left=None, right=None, type = 'class', name = 'a'):
+    def __init__(self, left=None, right=None):#, type = 'class', name = 'a'):
         self.left = left
         self.right = right
-        self.type = type
-        self.name = name
-        self.__secret = 'secret'
-    
+        #self.type = type
+        #self.name = name
+        
     def make_child(self, child, direction: str ='left'):
         if direction == 'left':
             self.left = child
@@ -34,36 +33,53 @@ class Node:
         else:
             raise WrongDirectionError
 
+    def menu(self):
+        x = -1
+        while x != 0:
+            print("For adding class press [1]")
+            x = int(input())
+            if x == 1:
+                add_class(self)
+            elif x == -2:
+                #while self != None:
+                self.__str__()
+        
+
+
     def __str__(self) -> str:
         return f'{self.left} / {self.right}'
 
-class a:
-    def __init__(self, left, right) -> None:
-        self.left = left
-        self.right = right
-    
-    def __str__(self) -> str:
-        return f'{self.left} / {self.right}'
-    
-# x = a(1, a(1, 2))
-# print(x.left, x.right)
-    
-def make_Node(tree: Node):
-    x = 1
-    y = 2
-    z = 'Zа наших'
-    tree.right = x 
-    tree.left = Node
-    tree.left.right = y 
-    tree.left.left = Node
-    tree.left.left.right = z
-    
-t = Node()
-make_Node(t)
-x = Node()
-print(x)
+tree=Node()
 
-# print(t.right, t.left.right, t.left.left.right)
-#print(t.right) 
-# print(t is t.left)
-# print(t.left is t.left.left)
+'''ontology['classes']=tree.right
+tree.left=Node()
+ontology['relations']=tree.left.right
+tree.left.left=Node()
+ontology['class_elements']=tree.left.left.right
+tree.left.left.left=Node()
+ontology['class_elements']=tree.left.left.left.right
+'''
+
+def add_class(tree: Node):
+    #t.right = Node()
+    #t.right.right = input('Название класса')
+    
+    #t0 = tree
+    #t = tree
+    t = tree.right
+    name = input('Name of class')
+    if t == None:
+        t = Node(right = name)
+    else:
+        while (t.left != None) and (t.right < name):        
+            #t0 = t
+            #t = t.left
+            t = t.get_child()
+        t = Node(left = t, right = name)
+
+
+
+
+
+
+tree.menu()
