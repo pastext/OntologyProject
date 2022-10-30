@@ -81,13 +81,14 @@ class Node:
     def add_class(self):
         name = input('Name of class\n')
         if self != None:
-            add(self, name)
+            self = add(self, name)
         
-def add(t: Node, name):
+def add(t: Node, name) -> Node:
     if (t.left != None) and (t.right < name):
-        add(t.left, name)
+        t.left = add(t.left, name)
     else:
-        t = Node(left = t, right = name)   
+        t = Node(left = t, right = name)
+    return t
 
 tree=Node()
 
