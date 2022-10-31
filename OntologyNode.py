@@ -24,7 +24,7 @@ class Node:
             x = int(input())
             if x == 1:
                 #self = self.add_class()
-                self.right.add_class()
+                self.right.add_to_list()
             elif x == 2:
                 self.right.outputting_list()
                 self.outputting_tree()
@@ -39,7 +39,7 @@ class Node:
         if self.left is not None:
             self.left.outputting_list()
     
-    def add_class(self):
+    def add_to_list(self):
         name = input('Name of class\n')
         if self.left:
             self.adding(self.left, name)
@@ -57,6 +57,23 @@ class Node:
             that.left = Node(left = next, right = name)
         else:
             next.left = Node(right = name)
+    
+    def delete_from_list(self):
+        if self.left:
+            name = input('Name of class\n')
+            that = self
+            next = self.left
+            while (next.left is not None) and (next.right < name):
+                that = next
+                next = next.left
+            if next.right == name:#Нужно ещё удалять из классов, отношений, эл. кл., эл. от.
+                that.left = next.left
+                next = None
+            else:
+                print('Нет такого')
+        else:
+            print('Удалять нечего')
+
                
 class Root(Node):
         def __init__(self):
@@ -78,17 +95,23 @@ class Root(Node):
         def menu(self):
             x = -1
             while x != 0:
-                x = int(input("Press:\n[1]For adding something\n[2]For see tree\n"))
+                x = int(input("Press:\n[1]For adding something\n[2]For see tree\n[3]For delete something\n"))
                 if x == 1:
                     x = int(input(" Press:\n [1]For add class\n [2]For add relation\n"))
                     if x == 1:
-                        self.c.add_class()
+                        self.c.add_to_list()
                     elif x == 2:
-                        self.r.add_class()
+                        self.r.add_to_list()
                 elif x == 2:
                     self.c.outputting_list()
                     self.r.outputting_list()
                     self.outputting_tree()
+                elif x == 3:
+                    x = int(input(" Press:\n [1]For delete class\n [2]For delete relation\n"))
+                    if x == 1:
+                        self.c.delete_from_list()
+                    elif x == 2:
+                        self.r.delete_from_list()
 
 
 
