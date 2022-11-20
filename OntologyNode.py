@@ -67,6 +67,32 @@ class Node:
         else:
             self.right = Node(right = name)
     #   ⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑⇑
+
+    def add_to_list_x2(self, name1, name2):
+        if self.right != None:
+            curr = self.right
+            while (curr.left != None) and (curr.right.left < name1):
+                curr = curr.left
+            if curr.right.left == name1:
+                pass
+                #print('Already exist\n')
+            elif curr.right.left > name1:
+                curr.left = Node(left = curr.left, right = curr.right)
+                curr.right = Node(left = name1)
+                #self.add_class(name1)
+            else:
+                curr.left = Node(right = Node(left = name1))
+                curr = curr.left
+                #self.add_class(name1)
+            #name = input('Name of element\n')
+            curr.right.add_to_list(name2)
+            #self.add_element(name2)
+        else:
+            self.right = Node(right = Node(left = name1))
+            #self.add_class(name1)
+            #name = input('Name of element\n')
+            self.right.right.add_to_list(name2)
+            #self.add_element(name2)
     
     #Нормальное удаление в ветке, которая является
     # правым потомком узла, в котором вызван метод ↵
@@ -195,18 +221,29 @@ class Root(Node):
                     #self.outputting_tree()
                 elif x == 3:
                     x = int(input(" Press:\n [1]For delete element\n [2]For delete class\n"
-                    " [3]For delete relation\n"))
+                    " [3]For delete relation\n [4]For delete elements from class\n"))
                     if x == 1:
-                        self.elements.delete_from_list('element')
+                        self.delete_element()
                     elif x == 2:
                         self.classes.delete_from_list('class')
                     elif x == 3:
                         self.relations.delete_from_list('relation')
+                    elif x == 4:
+                        x = int(input("  [1]For delete element from class\n"
+                        "  [2]For delete all elements from class"))
+                        if x == 1:
+                            pass
+                        elif x == 2:
+                            pass
 
     def add_element(self, name = 0):
         if name == 0:
             name = input('Name of adding element\n')
         self.elements.add_to_list(name)
+
+    def delete_element(self):#, name):
+        self.elements.delete_from_list('element')
+
 
     def add_class(self, name):
         #name = input('Name of adding class\n')
@@ -216,15 +253,32 @@ class Root(Node):
         #name = input('Name of adding relation\n')
         self.relations.add_to_list(name)
         
+    def add_element_to_class(self):
+        name_of_class = input("Name of class\n")
+        name_of_element = input("Name of element\n")
+        self.classes_elements.add_to_list_x2(name_of_class, name_of_element)
+        self.add_class(name_of_class)
+        self.add_element(name_of_element)
 
-    def add_element_to_class(self):#Только начал
+
+    def delete_classes_element(self, what_to_del = "element"):
+        name = input("Name of class")
+        #if what_to_del == "element":
+        if self.classes_elements.right != None:
+            curr = self.classes_elements.right
+            while (curr.left != None) and (curr.right.left < name):
+                curr = curr.left
+                
+""""
+    def add_element_to_class_(self):#Уже работает
         name = input('Name of class\n')
         if self.classes_elements.right != None:
             curr = self.classes_elements.right
             while (curr.left != None) and (curr.right.left < name):
                 curr = curr.left
             if curr.right.left == name:
-                print('Already exist\n')
+                pass
+                #print('Already exist\n')
             elif curr.right.left > name:
                 curr.left = Node(left = curr.left, right = curr.right)
                 curr.right = Node(left = name)
@@ -242,8 +296,11 @@ class Root(Node):
             name = input('Name of element\n')
             self.classes_elements.right.right.add_to_list(name)
             self.add_element(name)
+"""
 
 
+
+    
 
 tree = Root()
 #tree.pr()
