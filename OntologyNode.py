@@ -41,6 +41,14 @@ class Node:
         if self.left is not None:
             self.left.outputting_list()
 
+    def outputting_list_1(self):
+        print(self.right.left, "::")
+        self.right.right.outputting_list()
+        if self.left is not None:
+            self.left.outputting_list_1()
+
+
+
     #Нормальное добавление в ветку, которая является
     # правым потомком узла, в котором вызван метод ↵
     #   ⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓⇓
@@ -166,19 +174,23 @@ class Root(Node):
                 "[3]For delete something\n"))
                 if x == 1:
                     x = int(input(" Press:\n [1]For add element\n [2]For add class\n"
-                    " [3]For add relation\n"))
+                    " [3]For add relation\n [4]For add element to class\n"))
                     if x == 1:
                         self.add_element()#input('Name of adding element\n'))
                     elif x == 2:
                         self.add_class(input('Name of adding class\n'))
                     elif x == 3:
                         self.add_relation(input('Name of adding relation\n'))
+                    elif x == 4:
+                        self.add_element_to_class()
                 elif x == 2:
                     self.elements.right.outputting_list() if self.elements.right != None\
                          else print('Empty')
                     self.classes.right.outputting_list() if self.classes.right != None\
                          else print('Empty')
                     self.relations.right.outputting_list() if self.relations.right != None\
+                         else print('Empty')
+                    self.classes_elements.right.outputting_list_1() if self.classes_elements.right != None\
                          else print('Empty')
                     #self.outputting_tree()
                 elif x == 3:
@@ -198,17 +210,32 @@ class Root(Node):
 
     def add_class(self, name):
         #name = input('Name of adding class\n')
-        self.elements.add_to_list(name)
+        self.classes.add_to_list(name)
 
     def add_relation(self, name):
         #name = input('Name of adding relation\n')
-        self.elements.add_to_list(name)
+        self.relations.add_to_list(name)
         
 
     def add_element_to_class(self):#Только начал
         name = input('Name of class\n')
         if self.classes_elements.right != None:
-            pass
+            curr = self.classes_elements.right
+            while (curr.left != None) and (curr.right.left < name):
+                curr = curr.left
+            if curr.right.left == name:
+                print('Already exist\n')
+            elif curr.right.left > name:
+                curr.left = Node(left = curr.left, right = curr.right)
+                curr.right = Node(left = name)
+                self.add_class(name)
+            else:
+                curr.left = Node(right = Node(left = name))
+                curr = curr.left
+                self.add_class(name)
+            name = input('Name of element\n')
+            curr.right.add_to_list(name)
+            self.add_element(name)
         else:
             self.classes_elements.right = Node(right = Node(left = name))
             self.add_class(name)
