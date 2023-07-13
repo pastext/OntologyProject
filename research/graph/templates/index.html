@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'graph/css/index.css' %}">
+    <title>Ontology Research</title>
+</head>
+<body>
+    <div>Somebody once told me the world is gonna roll me</div>
+    <div id="container"></div>
+    <script src="{% static 'graph/js/libs/d3.v7.js' %}"></script>
+    <script src="{% static 'graph/js/index.js' %}" type="module"></script>
+</body>
+</html>
