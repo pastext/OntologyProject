@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Онтология</title>
+    <style>
+        .form-group {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Онтология</h1>
+
+    <h2>Элементы</h2>
+    <div class="form-group">
+        <label for="element">Выберите элемент:</label>
+        <select id="element" name="element">
+            <option value="">--- Выберите элемент ---</option>
+            {% for element in elements %}
+                <option value="{{ element.id }}">{{ element.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <h2>Классы</h2>
+    <div class="form-group">
+        <label for="class">Выберите класс:</label>
+        <select id="class" name="class">
+            <option value="">--- Выберите класс ---</option>
+            {% for class in classes %}
+                <option value="{{ class.id }}">{{ class.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <h2>Отношения</h2>
+    <div class="form-group">
+        <label for="relation">Выберите отношение:</label>
+        <select id="relation" name="relation">
+            <option value="">--- Выберите отношение ---</option>
+            {% for relation in relations %}
+                <option value="{{ relation.id }}">{{ relation.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Форма для сохранения таблиц в базе данных -->
+    <form action="/save_tables/" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Сохранить таблицы">
+    </form>
+</body>
+</html>

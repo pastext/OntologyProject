@@ -1,0 +1,6 @@
+django-admin startproject django_node
+cd django_node
+py ./manage.py runserver
+py manage.py migrate
+py manage.py startapp nodeapp
+
